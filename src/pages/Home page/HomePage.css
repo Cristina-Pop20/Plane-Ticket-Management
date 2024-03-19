@@ -1,0 +1,17 @@
+.home-page {
+    background-color: #885cee;
+    /* background-image: url('/assets/plane.jpg'); */
+    /* background-repeat: repeat-x; */
+    /* background-position: top; */
+}
+
+.home-button {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px; /* Add margin to create space between button and image */
+}

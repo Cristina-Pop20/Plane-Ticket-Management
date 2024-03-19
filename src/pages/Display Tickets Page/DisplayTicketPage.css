@@ -1,0 +1,30 @@
+.display-page {
+    background-color: #45fae8;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ticket-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.add-button {
+    margin-top: 20px;
+}
+
+.bin {
+    margin-top: 10px;
+    padding: 10px;
+    border: 2px solid #0088cc;
+    border-radius: 5px;
+    color: #0088cc;
+    cursor: pointer;
+}
+.edit-button {
+    margin-top: 10px;
+}

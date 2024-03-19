@@ -1,0 +1,41 @@
+.form-container {
+    background-color: #45fae8; /* Blue background color */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px; /* Adjust width as needed */
+    margin: 0 auto; /* Center the form horizontally */
+}
+
+.form-group {
+    margin-bottom: 20px; /* Add space between form groups */
+}
+
+.form-group label {
+    display: block; /* Display labels as block elements */
+    margin-bottom: 5px; /* Add space between labels and inputs */
+}
+
+.form-group input {
+    width: 100%; /* Make inputs fill the entire width */
+    padding: 8px; /* Adjust padding for inputs */
+    border-radius: 5px;
+    border: 1px solid #ccc; /* Add a border to inputs */
+    box-sizing: border-box; /* Ensure padding and border are included in width */
+}
+
+.submit-button {
+    background-color: rgb(76, 155, 215); /* Green submit button color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    display: block; /* Make the button a block element to fill the width */
+    margin-top: 20px; /* Add space above the button */
+}
+
+.submit-button:hover {
+    background-color: #a314b9; /* Darker green on hover */
+}
