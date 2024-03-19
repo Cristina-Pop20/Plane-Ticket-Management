@@ -1,4 +1,3 @@
-// AddTicketPage.tsx
 import {useNavigate} from 'react-router-dom';
 import {Form, FormInput} from '../../components/Form/Form';
 import {useTicketContext} from '../../context/TicketContext';

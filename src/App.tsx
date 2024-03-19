@@ -8,34 +8,6 @@ import {DisplayTicketsPage} from './pages/Display Tickets Page/DisplayTicketPage
 import {EditTicketPage} from './pages/EditTicketPage/EditTicketPage';
 import {Home} from './pages/Home page/HomePage';
 
-// let ticket1: PlaneTicket = new PlaneTicket(
-//     1,
-//     'Cluj-Napoca',
-//     'Paris',
-//     '17.03.2024',
-//     '12:00',
-//     90,
-// );
-// let ticket2: PlaneTicket = new PlaneTicket(
-//     2,
-//     'Cluj-Napoca',
-//     'Madrid',
-//     '20.03.2024',
-//     '13:00',
-//     100,
-// );
-
-// const tickets = [ticket1, ticket2];
-// const listTickets = tickets.map((ticket) => (
-//     <li key={ticket.getId()}>
-//         Departure:{ticket.getDeparture()}
-//         Destination:{ticket.getDestination()}
-//         Date:{ticket.getDate()}
-//         Hour:{ticket.getHour()}
-//         Price:{ticket.getPrice()}
-//     </li>
-// ));
-
 function App() {
     const [tickets, setTickets] = useState<PlaneTicket[]>([
         new PlaneTicket(1, 'Cluj-Napoca', 'Paris', '17.03.2024', '12:00', 90),
