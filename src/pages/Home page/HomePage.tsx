@@ -2,20 +2,28 @@ import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 import {styled} from '@mui/material/styles';
-import {useNavigate} from 'react-router-dom';
+import {useEffect} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import './HomePage.css';
 
 const images = [
     {
-        url: '/assets/plane_fly.jpg',
+        url: '/assets/button1.jpg',
         title: 'View available flights',
-        width: '40%',
+        width: 300,
+    },
+    {
+        url: '/assets/plane.jpg',
+        title: 'Book Flight',
+        width: 300,
     },
 ];
 
 const ImageButton = styled(ButtonBase)(({}) => ({
     position: 'relative',
     height: 200,
-    width: '100%',
+    width: '200%',
+    flex: 1,
     '&:hover, &.Mui-focusVisible': {
         zIndex: 1,
         '& .MuiImageBackdrop-root': {
@@ -73,52 +81,83 @@ const ImageMarked = styled('span')(({theme}) => ({
     transition: theme.transitions.create('opacity'),
 }));
 
-export function Home() {
+const Home = () => {
     const navigate = useNavigate();
-
-    const handleClick = () => {
-        navigate('/display');
+    const {userId} = useParams<{userId: string}>();
+    const handleClick = (title: string, userId: any) => {
+        if (title === 'View available flights') {
+            navigate(`/display/${userId}`);
+        } else if (title === 'Book Flight') {
+            navigate(`/bookFlight/${userId}`);
+        }
     };
-
+    useEffect(() => {
+        document.title = 'Joy of travel';
+        const favicon = document.querySelector(
+            "link[rel*='icon']",
+        ) as HTMLLinkElement;
+        if (favicon) {
+            favicon.href = '/assets/plane_fly.jpg';
+        }
+    }, []);
     return (
         <Box
             sx={{
                 display: 'flex',
-                flexWrap: 'wrap',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
                 minWidth: 300,
                 width: '100%',
             }}
         >
-            {images.map((image) => (
-                <ImageButton
-                    focusRipple
-                    key={image.title}
-                    style={{
-                        width: image.width,
-                    }}
-                    onClick={handleClick}
-                >
-                    <ImageSrc style={{backgroundImage: `url(${image.url})`}} />
-                    <ImageBackdrop className='MuiImageBackdrop-root' />
-                    <Image>
-                        <Typography
-                            component='span'
-                            variant='subtitle1'
-                            color='inherit'
-                            sx={{
-                                position: 'relative',
-                                p: 4,
-                                pt: 2,
-                                pb: (theme) =>
-                                    `calc(${theme.spacing(1)} + 6px)`,
-                            }}
-                        >
-                            {image.title}
-                            <ImageMarked className='MuiImageMarked-root' />
-                        </Typography>
-                    </Image>
-                </ImageButton>
-            ))}
+            <Typography variant='h4' className='unique-font' gutterBottom>
+                Choose your next destination
+            </Typography>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    flexWrap: 'wrap',
+                    minWidth: 300,
+                    width: '100%',
+                }}
+            >
+                {images.map((image) => (
+                    <ImageButton
+                        focusRipple
+                        key={image.title}
+                        style={{
+                            width: image.width,
+                        }}
+                        onClick={() => handleClick(image.title, userId)}
+                    >
+                        <ImageSrc
+                            style={{backgroundImage: `url(${image.url})`}}
+                        />
+                        <ImageBackdrop className='MuiImageBackdrop-root' />
+                        <Image>
+                            <Typography
+                                component='span'
+                                variant='subtitle1'
+                                color='inherit'
+                                sx={{
+                                    position: 'relative',
+                                    p: 4,
+                                    pt: 2,
+                                    pb: (theme) =>
+                                        `calc(${theme.spacing(1)} + 6px)`,
+                                }}
+                            >
+                                {image.title}
+                                <ImageMarked className='MuiImageMarked-root' />
+                            </Typography>
+                        </Image>
+                    </ImageButton>
+                ))}
+            </Box>
         </Box>
     );
-}
+};
+export default Home;

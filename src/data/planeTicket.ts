@@ -1,5 +1,5 @@
 export class PlaneTicket {
-    private id: number;
+    private planeId: number;
     private departure: string;
     private destination: string;
     private date: string;
@@ -7,14 +7,14 @@ export class PlaneTicket {
     private price: number;
 
     public constructor(
-        id: number,
+        planeId: number,
         departure: string,
         destination: string,
         date: string,
         hour: string,
         price: number,
     ) {
-        this.id = id;
+        this.planeId = planeId;
         this.departure = departure;
         this.destination = destination;
         this.date = date;
@@ -22,10 +22,10 @@ export class PlaneTicket {
         this.price = price;
     }
     public getId(): number {
-        return this.id;
+        return this.planeId;
     }
     public setId(id: number) {
-        this.id = id;
+        this.planeId = id;
     }
     public getDeparture(): string {
         return this.departure;

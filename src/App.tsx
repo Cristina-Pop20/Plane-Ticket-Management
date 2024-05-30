@@ -2,35 +2,67 @@ import {useState} from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import './App.css';
 import {TicketProvider} from './context/TicketContext';
+import {UserProvider} from './context/UserContext';
 import {PlaneTicket} from './data/planeTicket';
+import {User} from './data/user';
 import {AddTicketPage} from './pages/Add Ticket Page/AddTicketPage';
+import {AddUserPage} from './pages/Add User Page/AddUserPage';
+import BookFlight from './pages/Book Flight/BookFlight';
+import ChartPage from './pages/Chart Destination Page/ChartPage';
 import {DisplayTicketsPage} from './pages/Display Tickets Page/DisplayTicketPage';
+import DisplayUsers from './pages/DisplayUsersPage/DisplayUsersPage';
 import {EditTicketPage} from './pages/EditTicketPage/EditTicketPage';
-import {Home} from './pages/Home page/HomePage';
+import {EditUserPage} from './pages/EditUserPage/EditUserPage';
+import Home from './pages/Home page/HomePage';
 
 function App() {
-    const [tickets, setTickets] = useState<PlaneTicket[]>([
-        new PlaneTicket(1, 'Cluj-Napoca', 'Paris', '17.03.2024', '12:00', 90),
-        new PlaneTicket(2, 'Cluj-Napoca', 'Madrid', '20.03.2024', '13:00', 100),
-    ]);
+    const [tickets, setTickets] = useState<PlaneTicket[]>([]);
     const handleAddTicket = (ticket: PlaneTicket) => {
         setTickets([...tickets, ticket]);
     };
+    const [users, setUsers] = useState<User[]>([]);
+    const handleCreateUser = (user: User) => {
+        setUsers([...users, user]);
+    };
     return (
         <TicketProvider>
-            <BrowserRouter>
-                <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path='/display' element={<DisplayTicketsPage />} />
-                    <Route
-                        path='/add'
-                        element={
-                            <AddTicketPage onAddTicket={handleAddTicket} />
-                        }
-                    />
-                    <Route path='/edit/:id' element={<EditTicketPage />} />
-                </Routes>
-            </BrowserRouter>
+            <UserProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path='/users' element={<DisplayUsers />} />
+                        <Route
+                            path='/addUser'
+                            element={
+                                <AddUserPage onCreateUser={handleCreateUser} />
+                            }
+                        />
+                        <Route
+                            path='/editUser/:userId'
+                            element={<EditUserPage />}
+                        />
+                        <Route path='/home/:userId' element={<Home />} />
+                        <Route
+                            path='/display/:userId'
+                            element={<DisplayTicketsPage />}
+                        />
+                        <Route
+                            path='/add'
+                            element={
+                                <AddTicketPage onAddTicket={handleAddTicket} />
+                            }
+                        />
+                        <Route
+                            path='/edit/:ticketId'
+                            element={<EditTicketPage />}
+                        />
+                        <Route path='/chart' element={<ChartPage />} />
+                        <Route
+                            path='/bookFlight/:userId'
+                            element={<BookFlight />}
+                        />
+                    </Routes>
+                </BrowserRouter>
+            </UserProvider>
         </TicketProvider>
     );
 }

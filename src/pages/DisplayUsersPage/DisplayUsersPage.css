@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+.unique-font {
+    font-family: 'Shadows Into Light', cursive;
+}
+.display-page {
+    background-color: #45fae8;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0.5rem;
+    height: 75vh;
+    overflow-y: auto;
+}
+.menu-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+.user-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 4fr);
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.user-card-container {
+    cursor: pointer;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h1 {
+    flex: 1;
+    text-align: center;
+}
+.menu-button-container {
+    margin-left: auto;
+}
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: #09f;
+    animation: spin 1s ease infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    width: 100%;
+}

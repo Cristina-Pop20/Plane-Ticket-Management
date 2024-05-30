@@ -1,13 +1,19 @@
+import axios from 'axios';
 import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {FormProps, useNavigate, useParams} from 'react-router-dom';
-import {FormInput} from '../../components/Form/Form';
+import {useNavigate, useParams} from 'react-router-dom';
 import {useTicketContext} from '../../context/TicketContext';
 import {PlaneTicket} from '../../data/planeTicket';
+import {User} from '../../data/user';
+import './EditTicketPage.css';
 
-interface ExtendedFormProps extends FormProps {
-    onUpdateTicket: (data: FormInput) => void;
-    formData: FormInput;
+interface FormInput {
+    Id: number;
+    Departure: string;
+    Destination: string;
+    Date: string;
+    Hour: string;
+    Price: number;
 }
 
 export function EditTicketPage() {
@@ -22,62 +28,6 @@ export function EditTicketPage() {
         Hour: '',
         Price: 0,
     });
-
-    const Form = ({onUpdateTicket, formData, ...rest}: ExtendedFormProps) => {
-        const {register, handleSubmit} = useForm<FormInput>();
-        const onSubmit = (data: FormInput) => {
-            onUpdateTicket(data);
-        };
-
-        return (
-            <div className='form-container'>
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className='form'
-                    {...rest}
-                >
-                    <div className='form-group'>
-                        <label>Id</label>
-                        <input type='number' step='1' {...register('Id')} />
-                    </div>
-                    <div className='form-group'>
-                        <label>Departure</label>
-                        <input type='text' {...register('Departure')} />
-                    </div>
-
-                    <div className='form-group'>
-                        <label>Destination</label>
-                        <input type='text' {...register('Destination')} />
-                    </div>
-
-                    <div className='form-group'>
-                        <label>Date</label>
-                        <input type='date' {...register('Date')} />
-                    </div>
-
-                    <div className='form-group'>
-                        <label>Hour</label>
-                        <input type='time' {...register('Hour')} />
-                    </div>
-
-                    <div className='form-group'>
-                        <label>Price</label>
-                        <input
-                            type='number'
-                            step='0.01'
-                            {...register('Price')}
-                        />
-                    </div>
-
-                    <input
-                        type='submit'
-                        value='Submit'
-                        className='submit-button'
-                    />
-                </form>
-            </div>
-        );
-    };
 
     useEffect(() => {
         if (ticketId && tickets.length > 0) {
@@ -97,30 +47,136 @@ export function EditTicketPage() {
         }
     }, [ticketId, tickets]);
 
-    const handleUpdateTicket = (data: FormInput) => {
-        const updatedTickets = tickets.map((ticket) => {
-            if (ticket.getId() === data.Id) {
-                const updatedTicket = new PlaneTicket(
-                    data.Id,
-                    data.Departure,
-                    data.Destination,
-                    data.Date,
-                    data.Hour,
-                    data.Price,
-                );
-                return updatedTicket;
+    const handleUpdateTicket = async (data: FormInput) => {
+        try {
+            const user = new User(
+                1,
+                'Pop',
+                'Cristina',
+                'pop.cristina@gmail.com',
+                '1234',
+            );
+            const response = await axios.put(
+                `http://localhost:8080/updateTicket/${data.Id}`,
+                {
+                    id: data.Id,
+                    departure: data.Departure,
+                    destination: data.Destination,
+                    date: data.Date,
+                    hour: data.Hour,
+                    price: data.Price,
+                    user,
+                },
+            );
+            console.log(response);
+            if (response.status === 200) {
+                const updatedTickets = tickets.map((ticket) => {
+                    if (ticket.getId() === data.Id) {
+                        return new PlaneTicket(
+                            data.Id,
+                            data.Departure,
+                            data.Destination,
+                            data.Date,
+                            data.Hour,
+                            data.Price,
+                        );
+                    }
+                    return ticket;
+                });
+                setTickets(updatedTickets);
+                navigate('/display');
+            } else {
+                console.error('Failed to update ticket');
             }
-            return ticket;
-        });
-        setTickets(updatedTickets);
-        console.log(updatedTickets);
-        navigate('/display');
+        } catch (error) {
+            console.error('Error occurred while updating ticket:', error);
+        }
+    };
+
+    useEffect(() => {
+        document.title = 'Joy of travel';
+        const favicon = document.querySelector(
+            "link[rel*='icon']",
+        ) as HTMLLinkElement;
+        if (favicon) {
+            favicon.href = '/assets/plane_fly.jpg';
+        }
+    }, []);
+
+    return (
+        <div className='edit-ticket-page'>
+            <h1>Edit Ticket</h1>
+            <Form onUpdateTicket={handleUpdateTicket} formData={formData} />
+        </div>
+    );
+}
+
+interface FormProps {
+    onUpdateTicket: (data: FormInput) => void;
+    formData: FormInput;
+}
+
+function Form({onUpdateTicket, formData}: FormProps) {
+    const {register, handleSubmit} = useForm<FormInput>();
+    const onSubmit = (data: FormInput) => {
+        onUpdateTicket(data);
     };
 
     return (
-        <div>
-            <h1>Edit Ticket</h1>
-            <Form onUpdateTicket={handleUpdateTicket} formData={formData} />
+        <div className='form-container'>
+            <form onSubmit={handleSubmit(onSubmit)} className='form'>
+                <div className='form-group'>
+                    <label>Id</label>
+                    <input
+                        type='number'
+                        step='1'
+                        defaultValue={formData.Id}
+                        {...register('Id')}
+                    />
+                </div>
+                <div className='form-group'>
+                    <label>Departure</label>
+                    <input
+                        type='text'
+                        defaultValue={formData.Departure}
+                        {...register('Departure')}
+                    />
+                </div>
+                <div className='form-group'>
+                    <label>Destination</label>
+                    <input
+                        type='text'
+                        defaultValue={formData.Destination}
+                        {...register('Destination')}
+                    />
+                </div>
+                <div className='form-group'>
+                    <label>Date</label>
+                    <input
+                        type='date'
+                        defaultValue={formData.Date}
+                        {...register('Date')}
+                    />
+                </div>
+                <div className='form-group'>
+                    <label>Hour</label>
+                    <input
+                        type='time'
+                        defaultValue={formData.Hour}
+                        {...register('Hour')}
+                    />
+                </div>
+                <div className='form-group'>
+                    <label>Price</label>
+                    <input
+                        type='number'
+                        step='0.01'
+                        defaultValue={formData.Price}
+                        {...register('Price')}
+                    />
+                </div>
+                <input type='submit' value='Submit' className='submit-button' />
+            </form>
         </div>
     );
 }

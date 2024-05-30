@@ -1,60 +1,70 @@
-// import {fireEvent, render, waitFor} from '@testing-library/react';
-// import {Form, FormInput} from './Form';
+// // import '@testing-library/jest-dom';
+// // import {fireEvent, render, screen} from '@testing-library/react';
+// // import {expect, test} from 'vitest';
+// // import {Form, FormInput} from '../components/Form/Form';
 
-// describe('Form component', () => {
-//     const mockAddTicket = jest.fn();
+// import {render} from '@testing-library/react';
+// import {Form, FormInput} from '../components/Form/Form';
 
-//     const renderForm = () => {
-//         return render(<Form onAddTicket={mockAddTicket} />);
-//     };
+// // test('Form component renders all form fields', () => {
+// //     const mockOnAddTicket = jest.fn();
 
-//     test('renders form fields', () => {
-//         const {getByLabelText} = renderForm();
+// //     render(<Form onAddTicket={mockOnAddTicket} />);
 
-//         expect(getByLabelText('Id')).toBeInTheDocument();
-//         expect(getByLabelText('Departure')).toBeInTheDocument();
-//         expect(getByLabelText('Destination')).toBeInTheDocument();
-//         expect(getByLabelText('Date')).toBeInTheDocument();
-//         expect(getByLabelText('Hour')).toBeInTheDocument();
-//         expect(getByLabelText('Price')).toBeInTheDocument();
-//     });
+// //     expect(screen.getByLabelText('Id')).toBeInTheDocument();
+// //     expect(screen.getByLabelText('Departure')).toBeInTheDocument();
+// //     expect(screen.getByLabelText('Destination')).toBeInTheDocument();
+// //     expect(screen.getByLabelText('Date')).toBeInTheDocument();
+// //     expect(screen.getByLabelText('Hour')).toBeInTheDocument();
+// //     expect(screen.getByLabelText('Price')).toBeInTheDocument();
+// // });
 
-//     test('calls onAddTicket with form data on submit', async () => {
-//         const {getByLabelText, getByText} = renderForm();
+// // test('Form component calls onAddTicket with form data when submitted', () => {
+// //     const mockOnAddTicket = jest.fn();
 
-//         const testData: FormInput = {
-//             Id: 1,
-//             Departure: 'New York',
-//             Destination: 'London',
-//             Date: '2024-03-19',
-//             Hour: '12:00',
-//             Price: 500,
-//         };
+// //     render(<Form onAddTicket={mockOnAddTicket} />);
 
-//         fireEvent.change(getByLabelText('Id'), {target: {value: testData.Id}});
-//         fireEvent.change(getByLabelText('Departure'), {
-//             target: {value: testData.Departure},
-//         });
-//         fireEvent.change(getByLabelText('Destination'), {
-//             target: {value: testData.Destination},
-//         });
-//         fireEvent.change(getByLabelText('Date'), {
-//             target: {value: testData.Date},
-//         });
-//         fireEvent.change(getByLabelText('Hour'), {
-//             target: {value: testData.Hour},
-//         });
-//         fireEvent.change(getByLabelText('Price'), {
-//             target: {value: testData.Price},
-//         });
+// //     const formData: FormInput = {
+// //         Id: 1,
+// //         Departure: 'Cluj-Napoca',
+// //         Destination: 'Paris',
+// //         Date: '2024-03-25',
+// //         Hour: '12:00',
+// //         Price: 100,
+// //     };
 
-//         fireEvent.click(getByText('Submit'));
+// //     fireEvent.change(screen.getByLabelText('Id'), {
+// //         target: {value: formData.Id.toString()},
+// //     });
+// //     fireEvent.change(screen.getByLabelText('Departure'), {
+// //         target: {value: formData.Departure},
+// //     });
+// //     fireEvent.change(screen.getByLabelText('Destination'), {
+// //         target: {value: formData.Destination},
+// //     });
+// //     fireEvent.change(screen.getByLabelText('Date'), {
+// //         target: {value: formData.Date},
+// //     });
+// //     fireEvent.change(screen.getByLabelText('Hour'), {
+// //         target: {value: formData.Hour},
+// //     });
+// //     fireEvent.change(screen.getByLabelText('Price'), {
+// //         target: {value: formData.Price.toString()},
+// //     });
 
-//         await waitFor(() => {
-//             expect(mockAddTicket).toHaveBeenCalledWith(testData);
-//         });
+// //     fireEvent.submit(screen.getByRole('form'));
+
+// //     expect(mockOnAddTicket).toHaveBeenCalledWith(formData);
+// // });
+// describe('Form', () => {
+//     it('should render the form', () => {
+//         const result = render(
+//             <Form
+//                 onAddTicket={function (data: FormInput): void {
+//                     throw new Error('Function not implemented.');
+//                 }}
+//             />,
+//         );
+//         expect(result).toMatchSnapshot;
 //     });
 // });
-// function expect(arg0: any) {
-//     throw new Error('Function not implemented.');
-// }

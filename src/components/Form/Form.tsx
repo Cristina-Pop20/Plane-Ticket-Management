@@ -1,4 +1,5 @@
 import {useForm} from 'react-hook-form';
+import {useNavigate} from 'react-router-dom';
 import './Form.css';
 
 export interface FormInput {
@@ -16,9 +17,12 @@ interface FormProps {
 
 export function Form({onAddTicket}: FormProps) {
     const {register, handleSubmit} = useForm<FormInput>();
+    const navigate = useNavigate();
 
     const onSubmit = (data: FormInput) => {
         onAddTicket(data);
+        navigate('/display');
+        window.location.reload();
     };
 
     return (
